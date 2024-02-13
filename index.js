@@ -25,7 +25,7 @@ let users = [
 ];
 
 async function checkVisisted() {
-  const result = await db.query("SELECT country_code FROM visited_countries");
+  const result = await db.query("SELECT country_code FROM visited_countries join users on user_id=users.id where user_id=$1;",[currentUserId]);
   let countries = [];
   result.rows.forEach((country) => {
     countries.push(country.country_code);
@@ -68,6 +68,7 @@ app.post("/add", async (req, res) => {
 app.post("/user", async (req, res) => {});
 
 app.post("/new", async (req, res) => {
+
   //Hint: The RETURNING keyword can return the data that was inserted.
   //https://www.postgresql.org/docs/current/dml-returning.html
 });
